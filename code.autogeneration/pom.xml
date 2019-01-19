@@ -8,6 +8,33 @@
   <packaging>maven-plugin</packaging>
 
   <name>code.autogeneration Maven Plugin</name>
+  <licenses>
+    <license>
+        <name>The ApacheSoftware License, Version 2.0</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        <distribution>repo</distribution>
+    </license>
+</licenses>
+<scm>
+    <tag>master</tag>
+    <url>https://github.com/yantingji/365itedu-ssi-framework.git</url>
+    <connection>scm:git:https://github.com/yantingji/365itedu-ssi-framework.git</connection>
+    <developerConnection>scm:git:https://github.com/yantingji/365itedu-ssi-framework.git</developerConnection>
+</scm>
+<developers>
+    <developer>
+        <name>Yantingji</name>
+        <email>yantingji@126.com</email>
+        <organization>365itedu</organization>
+    </developer>
+</developers>
+
+
+<parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+</parent>
 
   <!-- FIXME change it to the project's website -->
   <url>http://maven.apache.org</url>

@@ -3,13 +3,37 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.itedu365</groupId>
-	<artifactId>ssi.framework</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>com.github.yantingji</groupId>
+	<artifactId>365itedu-ssi-framework</artifactId>
+	<!-- 请不要使用SNAPSHOT版本不然后面步骤不能继续 -->
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>ssi.framework</name>
+	<name>365itedu-ssi-framework</name>
 	<url>http://maven.apache.org</url>
+	<description> 365itedu-ssi-framework</description>
+
+	<licenses>
+		<license>
+			<name>The ApacheSoftware License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<!-- 保持和申请的issues里面填写的scm一致 -->
+	<scm>
+		<tag>0.0.1</tag>
+		<url>https://github.com/yantingji/365itedu-ssi-framework</url>
+		<connection>scm:git:https://github.com/yantingji/365itedu-ssi-framework.git</connection>
+		<developerConnection>scm:git:https://github.com/yantingji/365itedu-ssi-framework.git</developerConnection>
+	</scm>
+	<developers>
+		<developer>
+			<name>Yantingji</name>
+			<email>yantingji@126.com</email>
+			<organization>365itedu</organization>
+		</developer>
+	</developers>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,6 +41,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>3.0.8</version>
+		</dependency>
+<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
@@ -49,37 +78,112 @@
 			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
+		
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.5</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 			<version>3.1.1.RELEASE</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<version>3.1.1.RELEASE</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>3.1.1.RELEASE</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>3.1.1.RELEASE</version>
 		</dependency>
-
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<!-- 打包的 -P参数 -->
+			<id>release</id>
+			<build>
+				<plugins>
+					<!-- nexus 可以不配置 -->
+					 <plugin> <groupId>org.sonatype.plugins</groupId> <artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.7</version> <extensions>true</extensions> <configuration> <serverId>sonatype-nexus-staging</serverId>
+						<nexusUrl>https://oss.sonatype.org/</nexusUrl> 如果为False，需要手动Release <autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration> </plugin> 
+
+					<!-- Source -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>2.2.1</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- Javadoc -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.9.1</version>
+						<!-- -Xdoclint:none 是为了生存apidoc的时候检查不必太严格 -->
+						<configuration>
+							<additionalparam>-Xdoclint:none</additionalparam>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- GPG 打包插件 -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<distributionManagement>
+				<repository>
+					<!--- 此处的id需要和setting.xml 配置的service的id一致 -->
+					<id>sonatype-nexus-staging</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+				</repository>
+				<snapshotRepository>
+					<id>sonatype-nexus-snapshots</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+				</snapshotRepository>
+			</distributionManagement>
+
+		</profile>
+	</profiles>
+
 </project>

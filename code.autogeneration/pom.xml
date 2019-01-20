@@ -10,6 +10,9 @@
 	<packaging>jar</packaging>
 
 	<name>code.autogeneration Maven Plugin</name>
+	<url>http://maven.apache.org</url>
+	<description> SSI-Framework </description>
+
 	<licenses>
 		<license>
 			<name>The ApacheSoftware License, Version 2.0</name>
@@ -32,15 +35,11 @@
 		</developer>
 	</developers>
 
-	<!-- FIXME change it to the project's website -->
-	<url>http://maven.apache.org</url>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.codehaus.plexus</groupId>
 			<artifactId>plexus-utils</artifactId>
@@ -60,18 +59,11 @@
 			<id>release</id>
 			<build>
 				<plugins>
-					<!-- nexus -->
-					<plugin>
-						<groupId>org.sonatype.plugins</groupId>
-						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>1.6.7</version>
-						<extensions>true</extensions>
-						<configuration>
-							<serverId>code.autogeneration</serverId>
-							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-							<autoReleaseAfterClose>true</autoReleaseAfterClose>
-						</configuration>
-					</plugin>
+					<!-- nexus 可以不配置 -->
+					<!-- <plugin> <groupId>org.sonatype.plugins</groupId> <artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.7</version> <extensions>true</extensions> <configuration> <serverId>sonatype-nexus-staging</serverId>
+						<nexusUrl>https://oss.sonatype.org/</nexusUrl> 如果为False，需要手动Release <autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration> </plugin> -->
 
 					<!-- Source -->
 					<plugin>

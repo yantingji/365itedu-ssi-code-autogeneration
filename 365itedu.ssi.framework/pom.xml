@@ -6,7 +6,7 @@
 	<groupId>com.github.yantingji</groupId>
 	<artifactId>365itedu-ssi-framework</artifactId>
 	<!-- 请不要使用SNAPSHOT版本不然后面步骤不能继续 -->
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<packaging>jar</packaging>
 
 	<name>365itedu-ssi-framework</name>
